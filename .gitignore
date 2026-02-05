@@ -2,4 +2,5 @@
 .idea/
 */dist/index.html
 */dist/style.css
+*/dist/style.css.map
 .sass-cache/

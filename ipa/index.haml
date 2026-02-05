@@ -42,6 +42,11 @@
 
       Over DNS, request any name. Over SSH, do not pass a command.
 
+      Over DNS, you can also encode an IP address directly in the query name to have it returned:
+      for IPv4, use `1-2-3-4.lit4.tnedi.me` to get `1.2.3.4`;
+      for IPv6, use `--1.lit6.tnedi.me` to get `::1`.
+      Arbitrary prefixes are allowed, e.g. `foo.1-2-3-4.lit4.tnedi.me`.
+
       To find the public IP of your DNS servers, resolve `ns.tnedi.me`, `ns4.tnedi.me`, or `ns6.tnedi.me`.
 
       You can also get a unique 63-bit identifier represented in hexadecimal over HTTP(S) at [`tnedi.me/n`](//tnedi.me/n). Falling back to [`ident.me`](//ident.me/n) is safe.

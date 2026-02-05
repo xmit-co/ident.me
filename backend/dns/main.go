@@ -2,17 +2,47 @@ package main
 
 import (
 	"context"
-	"github.com/miekg/dns"
 	"log"
 	"net"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
+	"github.com/miekg/dns"
 	"github.com/pcarrier/ident.me/backend/internal/metrics"
 )
 
-var tracker = metrics.NewTracker(nil)
+var (
+	tracker      = metrics.NewTracker(nil)
+	ipv4Suffixes = []string{".lit4.ident.me.", ".lit4.tnedi.me."}
+	ipv6Suffixes = []string{".lit6.ident.me.", ".lit6.tnedi.me."}
+)
+
+// parseIPFromName extracts an IP address encoded in a DNS name.
+// For IPv4: 1-2-3-4.lit4.ident.me -> 1.2.3.4
+// For IPv6: --1.lit6.ident.me -> ::1
+func parseIPFromName(name string) net.IP {
+	name = strings.ToLower(name)
+	if ip := extractIP(name, ipv4Suffixes, "."); ip != nil {
+		return ip.To4()
+	}
+	return extractIP(name, ipv6Suffixes, ":")
+}
+
+func extractIP(name string, suffixes []string, sep string) net.IP {
+	for _, suffix := range suffixes {
+		if strings.HasSuffix(name, suffix) {
+			prefix := strings.TrimSuffix(name, suffix)
+			parts := strings.Split(prefix, ".")
+			ipStr := strings.ReplaceAll(parts[len(parts)-1], "-", sep)
+			if ip := net.ParseIP(ipStr); ip != nil {
+				return ip
+			}
+		}
+	}
+	return nil
+}
 
 func handle(w dns.ResponseWriter, r *dns.Msg) {
 	m := new(dns.Msg)
@@ -25,10 +55,16 @@ func handle(w dns.ResponseWriter, r *dns.Msg) {
 
 	var a net.IP
 
-	if ip, ok := w.RemoteAddr().(*net.UDPAddr); ok {
-		a = ip.IP
-	} else if ip, ok := w.RemoteAddr().(*net.TCPAddr); ok {
-		a = ip.IP
+	// First, try to parse an IP from the query name
+	if parsedIP := parseIPFromName(name); parsedIP != nil {
+		a = parsedIP
+	} else {
+		// Fall back to the client's IP
+		if ip, ok := w.RemoteAddr().(*net.UDPAddr); ok {
+			a = ip.IP
+		} else if ip, ok := w.RemoteAddr().(*net.TCPAddr); ok {
+			a = ip.IP
+		}
 	}
 
 	if a.To4() != nil {
@@ -63,7 +99,7 @@ func main() {
 			log.Fatalf("Failed to listen on TCP (%s)", err)
 		}
 	}()
-	sig := make(chan os.Signal)
+	sig := make(chan os.Signal, 1)
 	signal.Notify(sig, syscall.SIGINT, syscall.SIGTERM)
 	<-sig
 }
