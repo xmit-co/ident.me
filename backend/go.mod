@@ -2,7 +2,7 @@ module github.com/pcarrier/ident.me/backend
 
 go 1.25.0
 
-toolchain go1.25.7
+toolchain go1.25.5
 
 require (
 	github.com/miekg/dns v1.1.68
