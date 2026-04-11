@@ -799,6 +799,7 @@
           pc.onicecandidate = ({ candidate }) => {
             if (!candidate) return;
             let address = candidate.address;
+            if (!address) return;
             if (address.startsWith("[")) {
               address = address.slice(1, -1);
             }

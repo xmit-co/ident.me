@@ -26,12 +26,12 @@
         devShells = {
           default = pkgs.mkShell {
             packages = with pkgs; [
+              bun
               bundler
               nixfmt
               gnumake
               go
               pandoc
-              pnpm
               xmit.packages.${system}.default
             ];
           };
