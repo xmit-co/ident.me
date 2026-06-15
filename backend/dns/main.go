@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	"github.com/miekg/dns"
-	"github.com/pcarrier/ident.me/backend/internal/metrics"
+	"github.com/xmit-co/ident.me/backend/internal/metrics"
 )
 
 var (

@@ -1,4 +1,4 @@
-module github.com/pcarrier/ident.me/backend
+module github.com/xmit-co/ident.me/backend
 
 go 1.25.0
 

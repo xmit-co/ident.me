@@ -8,7 +8,7 @@
     %meta{name: :keywords, content: 'my IP, public IP, IP API'}
     %link{rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico'}
   %body
-    %a{href: 'https://github.com/pcarrier/ident.me', style: 'position:fixed;top:0;right:0'}
+    %a{href: 'https://github.com/xmit-co/ident.me', style: 'position:fixed;top:0;right:0'}
       %img{loading: 'lazy', src: 'https://github.blog/wp-content/uploads/2008/12/forkme_right_orange_ff7600.png', alt: 'Fork me on GitHub'}
 
     :markdown
@@ -26,7 +26,7 @@
       - [iOS app](https://apps.apple.com/app/ident-me/id6448754423)
       - Windows command line: install [`scoop`](https://scoop.sh/) then `scoop bucket add extras; scoop install identme`
       - macOS command line: install [`brew`](https://brew.sh/) then `brew install identme`
-      - Linux command line:`identme` in [AUR](https://aur.archlinux.org/packages/identme), [Alpine](https://pkgs.alpinelinux.org/packages?name=identme&arch=). Packagers and power users welcome to [the source code](https://github.com/pcarrier/ident.me/tree/main/cli).
+      - Linux command line:`identme` in [AUR](https://aur.archlinux.org/packages/identme), [Alpine](https://pkgs.alpinelinux.org/packages?name=identme&arch=). Packagers and power users welcome to [the source code](https://github.com/xmit-co/ident.me/tree/main/cli).
 
       ## Libraries
 
@@ -146,10 +146,10 @@
       All records point to a [cheap VPS](https://twitter.com/pcarrier/status/1495955405222170630) in Helsinki, Finland running Ubuntu Noble with:
 
       1. Some [sysctls](sysctl.conf.txt) for scalability;
-      2. [identssh](https://github.com/pcarrier/ident.me/tree/main/backend/ssh);
-      3. [identdns](https://github.com/pcarrier/ident.me/tree/main/backend/dns);
-      4. [identtelnet](https://github.com/pcarrier/ident.me/tree/main/backend/telnet);
-      5. [identhttp](https://github.com/pcarrier/ident.me/tree/main/backend/http) with [db-ip](https://db-ip.com);
+      2. [identssh](https://github.com/xmit-co/ident.me/tree/main/backend/ssh);
+      3. [identdns](https://github.com/xmit-co/ident.me/tree/main/backend/dns);
+      4. [identtelnet](https://github.com/xmit-co/ident.me/tree/main/backend/telnet);
+      5. [identhttp](https://github.com/xmit-co/ident.me/tree/main/backend/http) with [db-ip](https://db-ip.com);
       6. [stuntman](http://www.stunprotocol.org/);
       7. [redis](https://redis.io/);
       8. No [crash reporting](https://wiki.ubuntu.com/Apport).
